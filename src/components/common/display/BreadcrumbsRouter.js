@@ -16,6 +16,7 @@ const breadcrumbNameMap = {
   "/forgot-password": "Forgot Password",
   "/reset-password": "Reset Password",
   "/blog": "Blog",
+  "/create-landing-page": "Create Landing Page",
 };
 
 function LinkRouter(props) {

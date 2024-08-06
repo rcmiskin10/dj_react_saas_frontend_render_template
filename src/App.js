@@ -1,13 +1,15 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Layout from "./components/common/layout/Layout";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import CreateLandingPage from "./pages/CreateLandingPage";
 import Home from "./pages/Home";
 import LandingPage from "./pages/LandingPage";
 import Account from "./pages/account/Account";
+
 import Billing from "./pages/account/Billing";
 import CurrentPlan from "./pages/account/CurrentPlan";
 import ForgotPassword from "./pages/account/ForgotPassword";
@@ -59,111 +61,123 @@ function App(props) {
     loadStripe(process.env.REACT_APP_STRIPE_API_TEST_PK)
   );
 
+  useEffect(() => {}, []);
+
   return (
     <div className="App">
-      <AuthProvider>
-        <Elements stripe={stripePromise} options={ELEMENTS_OPTIONS}>
-          <Layout {...props}>
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <UnProtectedRoute>
-                    <LandingPage {...props} />
-                  </UnProtectedRoute>
-                }
-              />
-              <Route
-                path="forgot-password"
-                element={
-                  <UnProtectedRoute>
-                    <ForgotPassword {...props} />
-                  </UnProtectedRoute>
-                }
-              />
-              <Route
-                path="reset-password"
-                element={
-                  <UnProtectedRoute>
-                    <ResetPassword {...props} />
-                  </UnProtectedRoute>
-                }
-              />
-              <Route
-                path="signup"
-                element={
-                  <UnProtectedRoute>
-                    <SignUp {...props} />
-                  </UnProtectedRoute>
-                }
-              />
-              <Route
-                path="login"
-                element={
-                  <UnProtectedRoute>
-                    <Login {...props} />
-                  </UnProtectedRoute>
-                }
-              />
-              <Route path="blog" element={<Blog {...props} />} />
-              <Route
-                path="blog/post/:postId"
-                element={<BlogPost {...props} />}
-              />
+      {
+        <AuthProvider>
+          <Elements stripe={stripePromise} options={ELEMENTS_OPTIONS}>
+            <Layout {...props}>
+              <Routes>
+                <Route
+                  path="/"
+                  element={
+                    <UnProtectedRoute>
+                      <LandingPage {...props} />
+                    </UnProtectedRoute>
+                  }
+                />
+                <Route
+                  path="forgot-password"
+                  element={
+                    <UnProtectedRoute>
+                      <ForgotPassword {...props} />
+                    </UnProtectedRoute>
+                  }
+                />
+                <Route
+                  path="reset-password"
+                  element={
+                    <UnProtectedRoute>
+                      <ResetPassword {...props} />
+                    </UnProtectedRoute>
+                  }
+                />
+                <Route
+                  path="signup"
+                  element={
+                    <UnProtectedRoute>
+                      <SignUp {...props} />
+                    </UnProtectedRoute>
+                  }
+                />
+                <Route
+                  path="login"
+                  element={
+                    <UnProtectedRoute>
+                      <Login {...props} />
+                    </UnProtectedRoute>
+                  }
+                />
+                <Route path="blog" element={<Blog {...props} />} />
+                <Route
+                  path="blog/post/:postId"
+                  element={<BlogPost {...props} />}
+                />
 
-              <Route
-                path="home"
-                element={
-                  <ProtectedRoute>
-                    <Home {...props} />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="account"
-                element={
-                  <ProtectedRoute>
-                    <Account {...props} />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="account/billing"
-                element={
-                  <ProtectedRoute>
-                    <Billing {...props} />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="account/current-plan"
-                element={
-                  <ProtectedRoute>
-                    <CurrentPlan {...props} />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="account/update-plan"
-                element={
-                  <ProtectedRoute>
-                    <UpdatePlan {...props} />
-                  </ProtectedRoute>
-                }
-              />
+                <Route
+                  path="home"
+                  element={
+                    <ProtectedRoute>
+                      <Home {...props} />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="create-landing-page"
+                  element={
+                    <ProtectedRoute>
+                      <CreateLandingPage {...props} />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="account"
+                  element={
+                    <ProtectedRoute>
+                      <Account {...props} />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="account/billing"
+                  element={
+                    <ProtectedRoute>
+                      <Billing {...props} />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="account/current-plan"
+                  element={
+                    <ProtectedRoute>
+                      <CurrentPlan {...props} />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="account/update-plan"
+                  element={
+                    <ProtectedRoute>
+                      <UpdatePlan {...props} />
+                    </ProtectedRoute>
+                  }
+                />
 
-              <Route
-                path="account/profile"
-                element={
-                  <ProtectedRoute>
-                    <Profile {...props} />
-                  </ProtectedRoute>
-                }
-              />
-            </Routes>
-          </Layout>
-        </Elements>
-      </AuthProvider>
+                <Route
+                  path="account/profile"
+                  element={
+                    <ProtectedRoute>
+                      <Profile {...props} />
+                    </ProtectedRoute>
+                  }
+                />
+              </Routes>
+            </Layout>
+          </Elements>
+        </AuthProvider>
+      }
     </div>
   );
 }
